@@ -32,16 +32,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zh*enb0(sd*85_6guu-1$=#hf7no_no&81(6!m*050n7g_eedt'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-zh*enb0(sd*85_6guu-1$=#hf7no_no&81(6!m*050n7g_eedt')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 MEDIA_URLS = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,vercel.app').split(',')
 
 
 # Application definition
@@ -309,6 +309,10 @@ CORS_ALLOW_METHODS = [
 
 # For development only - remove in production
 CORS_ALLOW_ALL_ORIGINS = DEBUG
+
+# Add Vercel domain to CORS
+if os.getenv('VERCEL_ENV'):
+    CORS_ALLOWED_ORIGINS.append(f"https://{os.getenv('VERCEL_URL', 'sonora-rest-api.vercel.app')}")
 
 # Stripe Configuration
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')

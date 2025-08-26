@@ -15,6 +15,14 @@
       "dest": "/static/$1"
     },
     {
+      "src": "/admin/(.*)",
+      "dest": "/Sonora_REST_API/wsgi.py"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/Sonora_REST_API/wsgi.py"
+    },
+    {
       "src": "/(.*)",
       "dest": "/Sonora_REST_API/wsgi.py"
     }
@@ -22,5 +30,10 @@
   "env": {
     "PYTHONPATH": ".",
     "DJANGO_SETTINGS_MODULE": "Sonora_REST_API.settings"
+  },
+  "functions": {
+    "Sonora_REST_API/wsgi.py": {
+      "maxDuration": 30
+    }
   }
 }
